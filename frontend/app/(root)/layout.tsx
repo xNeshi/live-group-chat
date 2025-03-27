@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import React from "react";
 
 type LayoutProps = {
@@ -7,7 +8,7 @@ type LayoutProps = {
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
-      <header></header>
+      <Navbar />
       <main>{children}</main>
     </>
   );
