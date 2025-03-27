@@ -5,7 +5,7 @@ export const Navbar = () => {
   return (
     <header className="py-3 px-5">
       <nav className="flex justify-between items-center">
-        <div></div>
+        <br />
         <ThemeToggle />
       </nav>
     </header>
