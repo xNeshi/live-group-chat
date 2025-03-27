@@ -1,11 +1,12 @@
 import React from "react";
+import ThemeToggle from "./ThemeToggle";
 
 export const Navbar = () => {
   return (
-    <header className="bg-accent p-3">
+    <header className="py-3 px-5">
       <nav className="flex justify-between items-center">
         <div></div>
-        <div>Navbar</div>
+        <ThemeToggle />
       </nav>
     </header>
   );
