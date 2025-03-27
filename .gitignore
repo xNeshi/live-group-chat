@@ -1,6 +1,9 @@
+# FRONTEND ========================================
+
 HELP.md
 backend/target/
-backend/backend/target/
+backend/.env*
+!backend/.env.example
 !.mvn/wrapper/maven-wrapper.jar
 !backend/**/src/main/**/target/
 !backend/**/src/test/**/target/
@@ -38,8 +41,6 @@ backend/backend/.vscode/
 
 # FRONTEND ========================================
 
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /frontend/node_modules
 /frontend/.pnp
@@ -71,6 +72,7 @@ backend/backend/.vscode/
 
 # env files (can opt-in for committing if needed)
 /frontend/.env*
+!/frontend/.env.example
 
 # vercel
 /frontend/.vercel
