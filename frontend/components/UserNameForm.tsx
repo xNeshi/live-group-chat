@@ -19,7 +19,7 @@ export const UserNameForm = () => {
           name="username"
           id="username"
           placeholder="Enter your name"
-          className="p-4 !placeholder-gray-500 italic dark:placeholder-[#a3a2a2]"
+          className="p-4 py-5 !bg-background !placeholder-gray-500 italic dark:placeholder-[#a3a2a2]"
         />
       </div>
 
