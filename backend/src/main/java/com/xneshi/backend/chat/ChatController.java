@@ -22,7 +22,6 @@ public class ChatController {
   public ChatMessage sendMessage(
       @Payload ChatMessage chatMessage
   ) {
-    chatMessage.setTimestamp(LocalDateTime.now());
     return chatMessage;
   }
 
@@ -37,7 +36,6 @@ public class ChatController {
       throw new IllegalArgumentException("Sender already exists");
     }
     // Add username in web socket
-    chatMessage.setTimestamp(LocalDateTime.now());
     headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
     return chatMessage;
   }
