@@ -4,7 +4,7 @@ import { createContext } from "react";
 export interface Message {
   sender: string;
   content: string;
-  messageType: "CHAT" | "JOIN" | "LEAVE";
+  type: "CHAT" | "JOIN" | "LEAVE";
 }
 
 export interface WebSocketContextType {

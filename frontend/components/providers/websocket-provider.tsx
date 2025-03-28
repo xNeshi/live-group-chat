@@ -9,6 +9,7 @@ export const WebSocketProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const [usernameError, setUsernameError] = useState("");
   const [username, setUsername] = useState("");
   const [client, setClient] = useState<Client | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -27,7 +28,6 @@ export const WebSocketProvider = ({
         console.log("STOMP connection established");
         stompClient.subscribe("/topic/public", onMessageReceived);
         setClient(stompClient);
-        if (username) addUser();
       },
       onDisconnect: () => {
         console.log("STOMP disconnected");
@@ -36,8 +36,9 @@ export const WebSocketProvider = ({
         console.log("WebSocket error in STOMP:", error);
       },
       onStompError: (frame) => {
-        console.error("Broker reported error: " + frame.headers["message"]);
-        console.error("Additional details: " + frame.body);
+        if (frame.headers.message?.includes("Sender already exists")) {
+          setUsernameError("Username already exists");
+        }
       },
     });
 
@@ -52,6 +53,12 @@ export const WebSocketProvider = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (username) {
+      addUser();
+    }
+  }, [username]);
+
   const onMessageReceived = (payload: IMessage) => {
     const message = JSON.parse(payload.body);
     setMessages((prev) => [...prev, message]);
@@ -61,7 +68,8 @@ export const WebSocketProvider = ({
     if (client && client.connected) {
       const chatMessage = {
         sender: username,
-        type: "CHAT",
+        content: "",
+        type: "JOIN",
       };
 
       client.publish({

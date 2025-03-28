@@ -5,22 +5,41 @@ import ChatContent from "./ChatContent";
 import { useWebSocket } from "@/lib/hooks/useWebSocket";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import ChatNotification from "./ChatNotification";
 
 export const ChatBox = () => {
   const { messages, username } = useWebSocket();
-
+  console.log(messages);
   return (
     <section className="relative flex flex-col gap-3 items-start max-w-[500px] h-[500px] ml:h-[600px] w-full bg-card justify-start shadow-lg rounded-md py-5 px-4 ml:px-5 ml:py-6 -mt-20 ">
       <h1 className="text-[18px] pl-2">Live Chat Room</h1>
       <div className="flex flex-col gap-3 w-full h-[460px] bg-card rounded-2xl overflow-auto">
-        {messages.map((message, index) => (
-          <ChatContent
-            key={index}
-            fromWho={message.sender === username ? "self" : "other"}
-            sender={message.sender}
-            content={message.content}
-          />
-        ))}
+        {messages.map((message, idx) => {
+          if (message.type === "JOIN") {
+            return (
+              <ChatNotification
+                key={idx}
+                text={`${message.sender} joined the chat`}
+              />
+            );
+          } else if (message.type === "LEAVE") {
+            return (
+              <ChatNotification
+                key={idx}
+                text={`${message.sender} left the chat`}
+              />
+            );
+          } else {
+            return (
+              <ChatContent
+                key={idx}
+                content={message.content}
+                sender={message.sender}
+                fromWho={message.sender === username ? "self" : "other"}
+              />
+            );
+          }
+        })}
       </div>
       {username ? (
         <ChatMessageForm />

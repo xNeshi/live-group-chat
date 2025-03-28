@@ -14,10 +14,10 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 @RequiredArgsConstructor
 @Slf4j
 public class WebSocketEventListener {
-  private SimpMessageSendingOperations messagingTemplate;
+  private final SimpMessageSendingOperations messagingTemplate;
 
   @EventListener
-  public void handleWebSocketConnectListener(
+  public void handleWebSocketDisconnectListener(
       SessionDisconnectEvent event
   ) {
     StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
