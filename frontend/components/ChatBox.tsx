@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import ChatMessageForm from "./ChatMessageForm";
 import ChatContent from "./ChatContent";
 import { useWebSocket } from "@/lib/hooks/useWebSocket";
@@ -9,6 +9,12 @@ import ChatNotification from "./ChatNotification";
 
 export const ChatBox = () => {
   const { messages, username } = useWebSocket();
+  const chatEndRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <section className="relative flex flex-col gap-3 items-start max-w-[500px] h-[500px] ml:h-[600px] w-full bg-card justify-start shadow-lg rounded-md py-5 px-4 ml:px-5 ml:py-6 -mt-20 ">
       <h1 className="text-[18px] pl-2">Live Chat Room</h1>
@@ -39,6 +45,7 @@ export const ChatBox = () => {
             );
           }
         })}
+        <div ref={chatEndRef} />
       </div>
       {username ? (
         <ChatMessageForm />
