@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useWebSocket } from "@/lib/hooks/useWebSocket";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 
 export const ChatMessageForm = () => {
+  const { sendMessage } = useWebSocket();
   const [message, setMessage] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -19,7 +21,7 @@ export const ChatMessageForm = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (message.trim() === "") return;
-    console.log(message);
+    sendMessage(message.trim());
     setMessage("");
   };
 
@@ -46,6 +48,7 @@ export const ChatMessageForm = () => {
       className="flex gap-3 w-full items-end"
     >
       <textarea
+        maxLength={30}
         ref={textareaRef}
         value={message}
         onChange={handleInput}
@@ -67,9 +70,8 @@ export const ChatMessageForm = () => {
         size={"icon"}
         variant={"ghost"}
         className="size-6 mb-2 mr-2"
-        asChild
       >
-        <Send />
+        <Send className="size-6" />
       </Button>
     </form>
   );
