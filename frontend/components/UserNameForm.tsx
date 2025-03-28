@@ -5,17 +5,28 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useWebSocket } from "@/lib/hooks/useWebSocket";
 import { useRouter } from "next/navigation";
+import z, { ZodError } from "zod";
+import { usernameSchema } from "@/lib/validations";
 
 export const UserNameForm = () => {
   const route = useRouter();
+  const [error, setError] = useState<Record<string, string>>();
   const [username, setUsername] = useState("");
   const { setUsername: setUser } = useWebSocket();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUser(username);
-    setUsername("");
-    route.push("/room");
+    try {
+      usernameSchema.parse({ username: username });
+      setUser(username);
+      setUsername("");
+      route.push("/room");
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldErrors = error.flatten().fieldErrors;
+        setError(fieldErrors as unknown as Record<string, string>);
+      }
+    }
   };
 
   return (
@@ -36,6 +47,11 @@ export const UserNameForm = () => {
           placeholder="Enter your name"
           className="p-4 py-5 !bg-background !placeholder-gray-500 !placeholder-italic dark:placeholder-[#a3a2a2]"
         />
+        {error?.username && (
+          <div className="text-red-500 text-[11px] pl-1 mm:text-[13px]">
+            <p>{error.username}</p>
+          </div>
+        )}
       </div>
 
       <Button

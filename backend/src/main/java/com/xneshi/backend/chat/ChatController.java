@@ -7,6 +7,8 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
+
 @Controller
 public class ChatController {
   private final SimpUserRegistry simpUserRegistry;
@@ -20,6 +22,7 @@ public class ChatController {
   public ChatMessage sendMessage(
       @Payload ChatMessage chatMessage
   ) {
+    chatMessage.setTimestamp(LocalDateTime.now());
     return chatMessage;
   }
 
@@ -34,6 +37,7 @@ public class ChatController {
       throw new IllegalArgumentException("Sender already exists");
     }
     // Add username in web socket
+    chatMessage.setTimestamp(LocalDateTime.now());
     headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
     return chatMessage;
   }

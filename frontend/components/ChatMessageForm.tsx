@@ -48,6 +48,7 @@ export const ChatMessageForm = () => {
       className="flex gap-3 w-full items-end"
     >
       <textarea
+        maxLength={30}
         ref={textareaRef}
         value={message}
         onChange={handleInput}
@@ -69,9 +70,8 @@ export const ChatMessageForm = () => {
         size={"icon"}
         variant={"ghost"}
         className="size-6 mb-2 mr-2"
-        asChild
       >
-        <Send />
+        <Send className="size-6" />
       </Button>
     </form>
   );
