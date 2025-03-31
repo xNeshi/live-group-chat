@@ -1,3 +1,4 @@
+import { ChatLogsProps } from "@/components/ChatLogs";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -28,10 +29,40 @@ export function getAvatarColor(messageSender: String) {
 export function formatDate(isoString: string) {
   return new Intl.DateTimeFormat("en-US", {
     year: "numeric",
-    month: "long",
+    month: "2-digit",
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
-    second: "2-digit",
   }).format(new Date(isoString));
+}
+
+export function formatDateTime(isoString: string) {
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(isoString));
+}
+
+export function formatDateMonthYear(isoString: string) {
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(isoString));
+}
+
+export function groupByDate(messages: ChatLogsProps[]) {
+  return messages.reduce(
+    (acc: Record<string, ChatLogsProps[]>, message: ChatLogsProps) => {
+      const dateKey = formatDateMonthYear(message.createdAt);
+
+      if (!acc[dateKey]) {
+        acc[dateKey] = [];
+      }
+
+      acc[dateKey].push(message);
+      return acc;
+    },
+    {}
+  );
 }
