@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import ChatMessageForm from "./ChatMessageForm";
 import ChatContent from "./ChatContent";
 import { useWebSocket } from "@/lib/hooks/useWebSocket";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, History } from "lucide-react";
 import Link from "next/link";
 import ChatNotification from "./ChatNotification";
 
@@ -17,7 +17,11 @@ export const ChatBox = () => {
 
   return (
     <section className="relative flex flex-col gap-3 items-start max-w-[500px] h-[500px] ml:h-[600px] w-full bg-card justify-start shadow-lg rounded-md py-5 px-4 ml:px-5 ml:py-6 -mt-20 ">
-      <h1 className="text-[18px] pl-2">Live Chat Room</h1>
+      <div className="flex items-center justify-between w-full">
+        <h1 className="text-[18px] pl-2">Live Chat Room</h1>
+        <History className="text-gray-500 mr-2" />
+      </div>
+
       <div className="flex flex-col gap-1 w-full h-[460px] bg-card rounded-2xl overflow-auto">
         {messages.map((message, idx) => {
           if (message.type === "JOIN") {

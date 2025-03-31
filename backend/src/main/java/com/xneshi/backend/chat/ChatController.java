@@ -4,17 +4,14 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
-
-import java.time.LocalDateTime;
 
 @Controller
 public class ChatController {
-  private final SimpUserRegistry simpUserRegistry;
+  public final ChatService chatService;
 
-  public ChatController(SimpUserRegistry simpUserRegistry) {
-    this.simpUserRegistry = simpUserRegistry;
+  public ChatController(ChatService chatService) {
+    this.chatService = chatService;
   }
 
   @MessageMapping("/chat.sendMessage")
@@ -22,6 +19,7 @@ public class ChatController {
   public ChatMessage sendMessage(
       @Payload ChatMessage chatMessage
   ) {
+    chatService.saveMessage(chatMessage);
     return chatMessage;
   }
 
@@ -31,12 +29,9 @@ public class ChatController {
       @Payload ChatMessage chatMessage,
       SimpMessageHeaderAccessor headerAccessor
   ) {
-    // Check if Username already exists
-    if (simpUserRegistry.getUser(chatMessage.getSender()) != null) {
-      throw new IllegalArgumentException("Sender already exists");
-    }
     // Add username in web socket
     headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
     return chatMessage;
   }
+
 }

@@ -21,7 +21,7 @@ public class ChatMessage {
   private MesssageType type;
   @CreationTimestamp
   @Column(updatable = false)
-  private LocalDateTime timestamp;
+  private LocalDateTime createdAt;
 
 
 }
