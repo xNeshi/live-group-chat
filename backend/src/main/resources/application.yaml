@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   application:
     name: backend
   datasource:
@@ -8,7 +10,7 @@ spring:
     driver-class-name: ${DB_DRIVER}
   jpa:
     hibernate:
-      ddl-auto: ${DB_DDL_AUTO}
+      ddl-auto: ${DB_DDL-AUTO}
     properties:
       hibernate:
         format_sql: true

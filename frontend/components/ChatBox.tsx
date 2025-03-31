@@ -1,17 +1,34 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import ChatMessageForm from "./ChatMessageForm";
 import ChatContent from "./ChatContent";
 import { useWebSocket } from "@/lib/hooks/useWebSocket";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowLeftCircle, History } from "lucide-react";
 import Link from "next/link";
 import ChatNotification from "./ChatNotification";
 
 export const ChatBox = () => {
   const { messages, username } = useWebSocket();
+  const chatEndRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <section className="relative flex flex-col gap-3 items-start max-w-[500px] h-[500px] ml:h-[600px] w-full bg-card justify-start shadow-lg rounded-md py-5 px-4 ml:px-5 ml:py-6 -mt-20 ">
-      <h1 className="text-[18px] pl-2">Live Chat Room</h1>
+      <div className="flex items-center justify-between w-full">
+        <h1 className="text-[18px] pl-2">Live Chat Room</h1>
+        <div className="flex items-center gap-2">
+          <Link href="/">
+            <ArrowLeftCircle className="size-6 rounded-full active:scale-90" />
+          </Link>
+          <Link href="/chats">
+            <History className="text-gray-500 mr-2 cursor-pointer active:scale-90" />
+          </Link>
+        </div>
+      </div>
+
       <div className="flex flex-col gap-1 w-full h-[460px] bg-card rounded-2xl overflow-auto">
         {messages.map((message, idx) => {
           if (message.type === "JOIN") {
@@ -39,6 +56,7 @@ export const ChatBox = () => {
             );
           }
         })}
+        <div ref={chatEndRef} />
       </div>
       {username ? (
         <ChatMessageForm />
@@ -57,5 +75,3 @@ export const ChatBox = () => {
 };
 
 export default ChatBox;
-
-// Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nemo nostrum exercitationem mollitia corporis corrupti, provident necessitatibus aliquid expedita suscipit. Delectus soluta magni dolorem quo beatae quisquam adipisci asperiores aperiam.

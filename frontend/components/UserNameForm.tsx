@@ -2,11 +2,13 @@
 
 import React, { use, useEffect, useState } from "react";
 import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { useWebSocket } from "@/lib/hooks/useWebSocket";
 import { useRouter } from "next/navigation";
 import z, { ZodError } from "zod";
 import { usernameSchema } from "@/lib/validations";
+import { History, House } from "lucide-react";
+import Link from "next/link";
 
 export const UserNameForm = () => {
   const route = useRouter();
@@ -54,13 +56,27 @@ export const UserNameForm = () => {
         )}
       </div>
 
-      <Button
-        type="submit"
-        className="bg-card w-full ml:self-end ml:w-[150px]"
-        variant={"outline"}
-      >
-        Submit
-      </Button>
+      <div className="flex flex-row gap-2 ml:justify-end w-full">
+        <Link
+          href="/chats"
+          className={`${buttonVariants({ variant: "outline" })} bg-card`}
+        >
+          <History className="" />
+        </Link>
+        <Link
+          href="/room"
+          className={`${buttonVariants({ variant: "outline" })} bg-card`}
+        >
+          <House className="" />
+        </Link>
+        <Button
+          type="submit"
+          className="bg-card flex-1 ml:flex-none  ml:w-[150px]"
+          variant={"outline"}
+        >
+          Submit
+        </Button>
+      </div>
     </form>
   );
 };

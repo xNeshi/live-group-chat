@@ -48,7 +48,7 @@ export const ChatMessageForm = () => {
       className="flex gap-3 w-full items-end"
     >
       <textarea
-        maxLength={30}
+        maxLength={800}
         ref={textareaRef}
         value={message}
         onChange={handleInput}
