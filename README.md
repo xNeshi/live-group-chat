@@ -29,7 +29,7 @@ Make sure that these are installed in your local machine
 - ["git"](https://git-scm.com/)
 - ["Node.js"](https://nodejs.org/en)
 - ["npm"](https://www.npmjs.com/)
-- (Recommended) ["Intellij IDEA Ultimate"](https://www.jetbrains.com/idea/download/?section=windows)
+- ["Intellij IDEA Ultimate"](https://www.jetbrains.com/idea/download/?section=windows) (Recommended)
 ### Installation on Local Machine
 
 Clone the repository
@@ -78,4 +78,4 @@ mvn spring-boot:run
 npm run dev 
 ```
 
-Project should be running on http://localhost:3000. All users only uses one link
+Project should be running on http://localhost:3000. All users only use one link
