@@ -3,8 +3,7 @@ import React from "react";
 import { ChatLogDialog } from "./ChatLogDialog";
 
 export const ChatLogsArea = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
-  const res = await fetch("http://localhost:8080/api/chats");
+  const res = await fetch("http://localhost:8080/api/chats", {});
   const data = await res.json();
   const groupedMessages = groupByDate(data);
 

@@ -10,7 +10,7 @@ export const ChatLogs = ({ sender, content, createdAt }: ChatLogsProps) => {
   const formattedDate = formatDateTime(createdAt);
 
   return (
-    <div className="flex flex-col px-4 py-4 bg-background shadow-2xs w-full rounded-lg">
+    <div className="flex flex-col  cursor-pointer hover:bg-background/60 active:scale-98 px-4 py-4 bg-background shadow-2xs w-full rounded-lg">
       <div className="flex flex-row gap-3 items-start">
         <div
           style={{ backgroundColor: getAvatarColor(sender) }}
